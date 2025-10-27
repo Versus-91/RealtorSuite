@@ -17,6 +17,7 @@ namespace classifieds.Authorization.Users
             IRepository<UserRole, long> userRoleRepository,
             IRepository<UserLogin, long> userLoginRepository,
             IRepository<UserClaim, long> userClaimRepository,
+            IRepository<UserToken, long> userTokenRepository,
             IRepository<UserPermissionSetting, long> userPermissionSettingRepository,
             IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
             IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository)
@@ -29,7 +30,8 @@ namespace classifieds.Authorization.Users
                 userClaimRepository,
                 userPermissionSettingRepository,
                 userOrganizationUnitRepository,
-                organizationUnitRoleRepository)
+                organizationUnitRoleRepository,
+                userTokenRepository)
         {
         }
     }

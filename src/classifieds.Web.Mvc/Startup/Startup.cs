@@ -50,14 +50,7 @@ namespace classifieds.Web.Startup
                            options.Filters.Add(new AbpAutoValidateAntiforgeryTokenAttribute());
                        }
                    )
-                   .AddRazorRuntimeCompilation()
-                   .AddNewtonsoftJson(options =>
-                   {
-                       options.SerializerSettings.ContractResolver = new AbpMvcContractResolver(IocManager.Instance)
-                       {
-                           NamingStrategy = new CamelCaseNamingStrategy()
-                       };
-                   });
+                   .AddRazorRuntimeCompilation();
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
