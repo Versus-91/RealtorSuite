@@ -31,9 +31,9 @@
     <ProjectReference Include="..\classifieds.Web.Core\classifieds.Web.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Abp.Castle.Log4Net" Version="7.4.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="8.4.0" />
     <PackageReference Include="dropzone" Version="4.3.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.21">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
