@@ -1,0 +1,28 @@
+﻿@model classifieds.Models.ManageViewModels.VerifyPhoneNumberViewModel
+@{ ViewData["Title"] = "Verify Phone Number";
+    Layout = "layout/_front"; }
+
+<div class="section Site-content" style="height:100vh;">
+    <div class="container">
+        <h2>وارد کردن کد تایید</h2>
+        <form asp-controller="Users" asp-action="VerifyPhoneNumber" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+            <input asp-for="PhoneNumber" type="hidden" />
+            <h5>@ViewData["Status"]</h5>
+            <hr />
+            <div asp-validation-summary="All" class="help is-danger"></div>
+            <div class="field">
+                <label asp-for="Code" class="label"></label>
+                <input asp-for="Code" class="input" />
+                <span asp-validation-for="Code" class="help is-dangerr"></span>
+            </div>
+            <div class="field">
+                <button type="submit" class="button is-info">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

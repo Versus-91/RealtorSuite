@@ -1,0 +1,108 @@
+﻿@using classifieds.Web.Startup
+@{ ViewBag.Title = L("Amenities");
+    ViewBag.CurrentPageName = PageNames.Amenities; }
+
+@section scripts
+{
+
+    <environment names="Development">
+        <script src="~/view-resources/Views/Amenities/Index.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Amenities/Index.min.js" asp-append-version="true"></script>
+    </environment>
+
+}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>@L("Amenities")</h1>
+            </div>
+            <div class="col-sm-6">
+                <a href="javascript:;" data-toggle="modal" data-target="#CreateModal" class="btn bg-blue float-sm-right">
+                    <i class="fa fa-plus-square"></i>
+                    @L("Create")
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!--Use for bulk actions-->
+                            </div>
+                            <div class="col-md-6">
+                                @*@await Html.PartialAsync("~/Views/Roles/Index.AdvancedSearch.cshtml")*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="AmenitiesTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>@L("Name")</th>
+                                        <th>@L("Description")</th>
+                                        <th>@L("Icon")</th>
+                                        <th style="width: 150px">@L("Actions")</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("~/Areas/Admin/Views/Amenities/_CreateModal.cshtml")
+
+<div class="modal fade" id="AmenityEditModal" tabindex="-1" role="dialog" aria-labelledby="AmenityEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div id="iconPicker" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Icon Picker</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <ul class="icon-picker-list">
+                        <li>
+                            <a data-class="{{item}} {{activeState}}" data-index="{{index}}">
+                                <span class="{{item}}"></span>
+                                <span class="name-class">{{item}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="change-icon" class="btn btn-success">
+                    <span class="fa fa-check-circle-o"></span>
+                    Use Selected Icon
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

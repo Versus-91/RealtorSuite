@@ -1,0 +1,19 @@
+﻿@using classifieds.Web.Startup
+@model classifieds.Web.Models.Settings.SettingsInput;
+@{
+    ViewBag.CurrentPageName = PageNames.About;
+    Layout = "layout/_front";
+    ViewBag.Title = "درباره ما ";
+}
+<div class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column" style="height:70vh;">
+                <div  style="white-space: pre-line">
+                       @Html.Raw(Model.Value)
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

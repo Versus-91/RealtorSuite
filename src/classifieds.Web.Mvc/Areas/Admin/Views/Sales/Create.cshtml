@@ -1,0 +1,140 @@
+﻿@using classifieds.Web.Startup
+@{
+    ViewBag.Title = "create new sale report";
+    ViewBag.CurrentPageName = "create new sale report";
+}
+
+@section scripts
+{
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            postId:null,
+            price:null,
+            saleDate:null,
+            isCommissionPaid:false,
+            governmentCommissionRate:0,
+            internalCommissionRate:0,
+            loading:false,
+            post:null,
+            remarks:'',
+            categories:[],
+        },
+        computed:{
+            InternalCommissionAmount:function(){
+                let result = (this.internalCommissionRate / 100 )*((this.governmentCommissionRate /100) * this.price);
+                return !!result ? result :0;
+            },
+            GovernmentCommissionAmount:function(){
+                let result = (this.governmentCommissionRate /100) * this.price;
+                return !!result ? result :0;
+            }
+        },
+        methods:{
+            search:function(){
+                axios.get("/api/services/app/post/getdetails?id="+this.postId).then((res)=>{
+                    this.post = res.data.result
+                    if(this.post.category.name.includes("گرو")){
+                        this.governmentCommissionRate = 100;
+                    }else{
+                        this.governmentCommissionRate = 1;
+                    }
+                });
+            },
+            submit:function(number){
+                this.loading = true;
+                axios.defaults.headers.common['X-XSRF-TOKEN'] = document.getElementsByName("__RequestVerificationToken")[0].value;
+                var form = new FormData();
+                form.append('price', this.price);
+                form.append('postId', this.post.id);
+                form.append('isCommissionPaid', this.isCommissionPaid);
+                form.append('remarks', this.remarks);
+                form.append('governmentCommissionRate', this.governmentCommissionRate);
+                form.append('internalCommissionRate', this.internalCommissionRate);
+                form.append('categoryId', this.post.categoryId);
+                form.append('SaleDate', this.saleDate);
+                axios.post('/admin/sales/create', form).then(function(res) {
+                       this.loading = false;
+                       window.location.href = "/admin/sales";
+                   }).catch(function(err){ console.log(err);this.loading = false;});
+            },
+        },
+        created:function(){
+            var url = window.location.pathname;
+            this.postId = url.substring(url.lastIndexOf('/') + 1);
+            this.search();
+        },
+    });
+</script>
+}
+<div class="section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="card my-5">
+                    <div class="card-body" style="min-height:50vh;">
+                        <div class="alert alert-primary text-center" role="alert">
+                            {{post?.title}}
+                        </div>
+                        <div class="row">
+                            <div class=col-md-12>
+                                <form>
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="validationDefault01">Date of sale :</label>
+                                            <input type="date" class="form-control" id="validationDefault01" v-model="saleDate" placeholder="date of sale" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="price">Price : </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">؋</span>
+                                                </div>
+                                                <input type="number" class="form-control" v-model.number="price" name="price"
+                                                       placeholder="Price" aria-describedby="inputGroupPrepend2" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                       <div class="col-md-6 mb-3">
+                                            <label for="price">Gov Commission rate : {{governmentCommissionRate}}%</label>
+                                            <div class="input-group">
+                                                <input type="range" min="0" max="100" class="form-control" v-model.number="governmentCommissionRate" name="InternalCommissionRate"
+                                                       placeholder="InternalCommissionRate" aria-describedby="inputGroupPrepend2" required>
+                                            </div>
+                                            <p  class="form-text ">Gov Commission Amount : {{GovernmentCommissionAmount}}</p>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="price">Internal commission rate : {{internalCommissionRate}}%</label>
+                                            <div class="input-group">
+                                                <input  class="form-control" v-model.number="internalCommissionRate" name="InternalCommissionRate"
+                                                       placeholder="InternalCommissionRate" type="range" id="points" name="points" min="0" max="100" aria-describedby="inputGroupPrepend2" required>
+                                            </div>
+                                            <p  class="form-text ">Internal Commission Amount : {{InternalCommissionAmount}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="checkbox" class="custom-control-input" v-model="isCommissionPaid" id="customCheck1">
+                                          <label class="custom-control-label" for="customCheck1">Paid Commission </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Remarks : </label>
+                                        <textarea v-model="remarks" class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                                    </div>
+                                    <button class="btn btn-success" type="button" v-on:click="submit" :disabled="saleDate == null || price == null"><i class="fas fa-paper-plane"></i> Submit form</button>
+                                    <a href="/admin/posts" class="btn btn-danger" type="button" v-on:click="submit"><i class="fas fa-times"></i> Cancel</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

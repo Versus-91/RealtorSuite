@@ -1,0 +1,39 @@
+﻿@using classifieds.Web.Models.Common.Modals
+@model classifieds.Amenities.Dto.AmenityDto
+@{
+    Layout = null;
+}
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Edit")))
+<form  role="form" class="form-horizontal" asp-action="update"  enctype="multipart/form-data">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Icon" value="@Model.Icon" />
+
+    <div class="modal-body">
+        <div class="modal-body">
+            <div class="form-group row required">
+                <label class="col-md-3 col-form-label" for="rolename">@L("Name")</label>
+                <div class="col-md-9">
+                    <input type="text" name="Name" class="form-control" required maxlength="32" minlength="2" value="@Model.Name">
+                </div>
+            </div>
+            <div class="form-group row required">
+                <label class="col-md-3 col-form-label" for="rolename">@L("Description")</label>
+                <div class="col-md-9">
+                    <input type="text" name="Description" class="form-control" required maxlength="32" minlength="2" value="@Model.Description">
+                </div>
+            </div>
+            @if(Model.Icon != null){
+                <img src="/@Model.Icon" style="height:50px;width:50px;" />
+            }
+            <div class="form-group rows">
+               <div class="custom-file">
+                 <input type="file" class="custom-file-input" id="customFile" name="File">
+                 <label class="custom-file-label" for="customFile">Choose file</label>
+               </div>
+            </div> 
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+
+<script src="~/view-resources/Views/Amenities/_EditModal.js" asp-append-version="true"></script>

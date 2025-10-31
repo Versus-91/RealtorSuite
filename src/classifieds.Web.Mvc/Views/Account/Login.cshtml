@@ -1,0 +1,98 @@
+﻿@using Abp.Authorization.Users
+@model classifieds.Web.Models.Account.LoginFormViewModel
+@{ ViewBag.Title = "ورود به حساب"; }
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/Account/Login.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Account/Login.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<div class="area">
+    <div class="section Site-content" >
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                    <form id="LoginForm" asp-action="Login" class="box" method="post">
+                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                        <input type="hidden" name="returnUrlHash" />
+                        <div class="field my-5">
+                            <div class="control has-icons-right">
+                                <input type="text" name="usernameOrEmailAddress" class="input" placeholder="@L("UserNameOrEmail")" required autofocus maxlength="@AbpUserBase.MaxEmailAddressLength">
+                                <div class="input-group-append">
+                                    <span class="icon is-small is-right">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field mb-3">
+                            <div class="control has-icons-right">
+                                <input type="password" class="input" name="Password" autocomplete="password" placeholder="@L("Password")" required maxlength="@AbpUserBase.MaxPlainPasswordLength">
+                                <span class="icon is-small is-right">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="field ">
+                            <div class="column is-8">
+                                <div class="icheck-primary">
+                                    <input type="checkbox" id="RememberMe" name="RememberMe" value="true">
+                                    <label for="RememberMe">
+                                        @L("RememberMe")
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" id="LoginButton" class="button is-success is-fullwidth" disabled>@L("LogIn")</button>
+                            </div>
+                        </div>
+                    </form>
+                    @*<div class="social-auth-links text-center mb-3">
+                            <p>- OR -</p>
+                            <a href="javascript:;" class="btn btn-block btn-primary">
+                                <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                            </a>
+                            <a href="javascript:;" class="btn btn-block btn-danger">
+                                <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                            </a>
+                        </div>*@
+                    <p class="buttons">
+                        @if (Model.IsSelfRegistrationAllowed)
+                        {
+            <a asp-action="Register" class="button is-fullwidth">
+                <span class="icon  has-text-grey">
+                    <i class="fa fa-plus-circle mx-2"></i>
+                    @L("Register")
+                </span>
+            </a>}
+                        <a asp-controller="home" asp-action="" class="button is-fullwidth mt-3">
+                            <span class="icon  has-text-grey">
+                                <i class="fa fa-home mx-2 "></i>
+                                @L("Back")
+                            </span>
+                        </a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
