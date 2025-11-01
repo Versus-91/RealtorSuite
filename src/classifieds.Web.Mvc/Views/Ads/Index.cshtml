@@ -1,7 +1,7 @@
 ﻿@using classifieds.Web.Startup
 @model classifieds.Posts.Dto.GetAllPostsInput
 @{
-    ViewBag.Title = "جستجو";
+    ViewBag.Title = "Search";
     ViewBag.CurrentPageName = PageNames.Home;
     Layout = "layout/_front";
 }
@@ -33,12 +33,12 @@
                 </div>
             </div>
             <div class="column is-3">
-                <p class="control">
+                <p class="control pt-4 mt-5">
                     <button aria-label="search" type="button" class="button" v-on:click="search()"><i class="fas fa-search"></i></button>
                 </p>
             </div>
             <div class="column is-12">
-                <a href="#" v-for="area of areas" class="tag is-link  p-1 m-2" :class="{'is-success':selectedArea == area.id}" v-on:click="onAreaSelect(area)">{{area.name}}</a>
+                <a href="#" v-for="area of areas" class="tag is-primay is-medium" :class="{'is-success':selectedArea == area.id}" v-on:click="onAreaSelect(area)">{{area.name}}</a>
             </div>
         </div>
     </div>

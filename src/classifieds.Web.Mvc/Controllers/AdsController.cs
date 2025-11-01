@@ -87,7 +87,7 @@ namespace classifieds.Web.Controllers
         public async Task<IActionResult> Create()
         {
             var cities = (await _cityService.GetAllAsync(new PagedAndSortedResultRequestDto { MaxResultCount = int.MaxValue })).Items.ToList();
-            cities.Insert(0, new CityDto { Id = 0, Name = "شهر را انتخاب کنید" });
+            cities.Insert(0, new CityDto { Id = 0, Name = "Select City" });
             ViewData["Cities"] = new SelectList(cities, nameof(CityDto.Id), nameof(CityDto.Name));
             ViewData["Amenities"] = (await _amenityService.GetAllAsync(new PagedAndSortedResultRequestDto())).Items;
             ViewData["Categories"] = new SelectList((await _categoryService.GetAllAsync(new PagedAndSortedResultRequestDto())).Items, "Id", "Name");
@@ -100,7 +100,7 @@ namespace classifieds.Web.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var cities = (await _cityService.GetAllAsync(new PagedAndSortedResultRequestDto { MaxResultCount = int.MaxValue })).Items.ToList();
-            cities.Insert(0, new CityDto { Id = 0, Name = "شهر را انتخاب کنید" });
+            cities.Insert(0, new CityDto { Id = 0, Name = "Select City" });
             ViewData["Cities"] = new SelectList(cities, nameof(CityDto.Id), nameof(CityDto.Name));
             ViewData["Amenities"] = (await _amenityService.GetAllAsync(new PagedAndSortedResultRequestDto())).Items;
             ViewData["Categories"] = new SelectList((await _categoryService.GetAllAsync(new PagedAndSortedResultRequestDto())).Items, "Id", "Name");
