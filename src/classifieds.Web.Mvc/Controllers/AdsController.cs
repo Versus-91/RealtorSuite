@@ -55,9 +55,9 @@ namespace classifieds.Web.Controllers
         public async Task<IActionResult> Index(GetAllPostsInput inputs)
         {
             var types = (await _typeService.GetAllAsync(new PagedAndSortedResultRequestDto())).Items.ToList();
-            types.Insert(0, new PropertyTypeDto { Id = 0, Name = "مهم نیست" });
+            types.Insert(0, new PropertyTypeDto { Id = 0, Name = "Any" });
             var categories = (await _categoryService.GetAllAsync(new PagedAndSortedResultRequestDto())).Items.ToList();
-            categories.Insert(0, new CategoryDto { Id = 0, Name = "مهم نیست" });
+            categories.Insert(0, new CategoryDto { Id = 0, Name = "Any" });
             ViewData["Categories"] = new SelectList(categories, nameof(CategoryDto.Id), nameof(CategoryDto.Name),inputs.Category);
         
             if (inputs.Types == null)
