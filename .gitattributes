@@ -11,3 +11,5 @@ srs/classifieds.Web.Mvc/wwwroot/** linguist-vendored
 *.8 linguist-vendored
 *.man linguist-vendored
 *.roff linguist-vendored
+*.text
+*.txt
